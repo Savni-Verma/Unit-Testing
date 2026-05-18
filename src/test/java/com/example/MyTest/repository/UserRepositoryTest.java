@@ -7,8 +7,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 public class UserRepositoryTest {
@@ -32,5 +31,13 @@ public class UserRepositoryTest {
         assertEquals("shanu@gmail.com",result.get().getEmail());
 
         assertEquals("shanu@123",result.get().getPassword());
+    }
+    @Test
+    void findByEmail_whenEmailDoesNotExist_shouldReturnEmpty(){
+
+        Optional<User> result = userRepo.findByEmail("xyz@gmail.com");
+
+        assertFalse(result.isPresent());
+        assertTrue(result.isEmpty());
     }
 }
